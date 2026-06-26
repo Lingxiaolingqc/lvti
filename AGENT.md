@@ -28,6 +28,9 @@ The app is a bilingual self-test for LVTI, the Love View Type Indicator. Users a
 - Opening the site should show the cover/entrance screen first, not jump directly into questions or results.
 - Language switching should be a single choice control. English and Chinese should not be displayed as parallel duplicated UI.
 - One-question-at-a-time test flow.
+- The question bank may contain more than 40 questions. Each test session should randomly select 40 questions.
+- Random selection must remain balanced: 10 questions per axis and 5 questions per pole.
+- Selected question IDs should persist during a session so refresh/back navigation does not change the test.
 - 5-point answer scale.
 - Progress indicator.
 - Back and next navigation.

@@ -2,7 +2,7 @@
 
 LVTI, short for **Love View Type Indicator**, is a bilingual self-test website for exploring a person's love-view type.
 
-The test asks 40 lightweight relationship questions and calculates one of 16 LVTI types based on four dimensions:
+The test shows 40 lightweight relationship questions, randomly selected from a larger balanced question bank, and calculates one of 16 LVTI types based on four dimensions:
 
 - **R / P**: Romantic vs Practical
 - **S / F**: Stable vs Free
@@ -15,11 +15,12 @@ The project is currently a static website, so it can run directly in a browser w
 
 - Cover page with test introduction
 - English / Chinese language selection
-- 40-question one-by-one test flow
+- 40-question one-by-one test flow selected from a larger question bank
 - 5-point answer scale
 - Progress indicator
 - Back and next navigation
 - Local progress saving with `localStorage`
+- Random question selection saved per test session, so refreshing does not change the current test
 - Result page with type code, nickname, axis breakdown, strengths, blind spots, communication style, conflict style, ideal dynamic, and compatibility notes
 - Share result button using Web Share API or clipboard fallback
 - Retake test flow
@@ -192,7 +193,7 @@ Agree = +1
 Strongly agree = +2
 ```
 
-Each question maps to one LVTI axis and one positive pole. The app adds the answer score to the corresponding axis. The final type is built from the winning pole on each axis.
+Each question maps to one LVTI axis and one positive pole. The app randomly selects 40 questions for each test while keeping the set balanced: 10 questions per axis and 5 questions per pole. The app adds the answer score to the corresponding axis. The final type is built from the winning pole on each axis.
 
 Tie fallback:
 
@@ -216,6 +217,7 @@ This is an early working version. The main product flow works, but the model and
 Known next improvements:
 
 - Replace generated result profile text with fully hand-written profiles for all 16 types
+- Continue expanding the question bank while preserving balanced random selection
 - Refine Chinese and English wording after user feedback
 - Convert the static app to React + TypeScript if the project grows
 - Add automated scoring and data validation tests

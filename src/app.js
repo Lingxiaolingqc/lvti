@@ -8,6 +8,7 @@ const STORAGE_KEYS = {
   currentQuestionIndex: "lvti.currentQuestionIndex",
   completed: "lvti.completed",
   started: "lvti.started",
+  selectedQuestionIds: "lvti.selectedQuestionIds",
 };
 
 const uiText = {
@@ -169,6 +170,14 @@ const questions = [
   q("q38", "EC", "C", "In love, I try not to let temporary emotions decide everything.", "在爱情里，我会尽量不让一时的情绪决定一切。"),
   q("q39", "EC", "E", "I feel closest to someone when we can share feelings openly and deeply.", "当我们能坦率而深入地分享感受时，我会觉得最亲近。"),
   q("q40", "EC", "C", "A steady and peaceful bond is more attractive to me than emotional highs and lows.", "比起情绪的大起大落，稳定平和的连接更吸引我。"),
+  q("q41", "RP", "R", "A thoughtful treat on a date can feel romantic even if it is not expensive.", "约会时一个用心的小花费，即使不贵，也会让我觉得很浪漫。"),
+  q("q42", "RP", "P", "On dates, I care more about a spending style that fits real life than expensive romantic gestures.", "约会时，比起昂贵的浪漫表达，我更在意消费方式是否符合现实生活。"),
+  q("q43", "SF", "S", "A clear understanding about dating costs makes a relationship feel safer to me.", "对于约会花费有清楚共识，会让我在关系里更有安全感。"),
+  q("q44", "SF", "F", "I prefer dating costs to stay flexible instead of following one fixed rule every time.", "我更喜欢约会花费保持弹性，而不是每次都必须遵守固定规则。"),
+  q("q45", "DI", "D", "I would rather talk openly about splitting costs than silently guess what is expected.", "比起默默猜测该不该 AA，我更愿意直接聊清楚约会花费怎么分。"),
+  q("q46", "DI", "I", "When paying on dates, I prefer handling it naturally in the moment instead of discussing it directly.", "约会付款时，比起提前直接讨论，我更倾向于当下自然处理。"),
+  q("q47", "EC", "E", "Small spending gestures can affect my feelings when they make me feel remembered or valued.", "如果一些小花费让我感觉被记得、被重视，它们会很影响我的感受。"),
+  q("q48", "EC", "C", "I try not to judge someone's affection by how much money they spend on me.", "我会尽量不根据对方为我花了多少钱来判断对方有多喜欢我。"),
 ];
 
 const resultBase = {
@@ -198,6 +207,7 @@ const state = {
   currentQuestionIndex: loadNumber(STORAGE_KEYS.currentQuestionIndex, 0),
   completed: loadBoolean(STORAGE_KEYS.completed, false),
   started: loadBoolean(STORAGE_KEYS.started, false),
+  selectedQuestionIds: loadJson(STORAGE_KEYS.selectedQuestionIds, []),
   screen: "cover",
   shareNote: "",
 };
@@ -207,6 +217,44 @@ render();
 
 function q(id, axis, positivePole, en, zh) {
   return { id, axis, positivePole, reverse: false, text: { en, zh } };
+}
+
+function getQuestionById(id) {
+  return questions.find((question) => question.id === id);
+}
+
+function getTestQuestions() {
+  if (!Array.isArray(state.selectedQuestionIds) || state.selectedQuestionIds.length !== 40) {
+    state.selectedQuestionIds = buildQuestionSet();
+    saveJson(STORAGE_KEYS.selectedQuestionIds, state.selectedQuestionIds);
+  }
+  const selected = state.selectedQuestionIds.map(getQuestionById).filter(Boolean);
+  if (selected.length !== 40) {
+    state.selectedQuestionIds = buildQuestionSet();
+    saveJson(STORAGE_KEYS.selectedQuestionIds, state.selectedQuestionIds);
+    return state.selectedQuestionIds.map(getQuestionById).filter(Boolean);
+  }
+  return selected;
+}
+
+function buildQuestionSet() {
+  const selected = [];
+  for (const axis of axes) {
+    for (const pole of axis.poles) {
+      const candidates = questions.filter((question) => question.axis === axis.id && question.positivePole === pole);
+      selected.push(...shuffle(candidates).slice(0, 5).map((question) => question.id));
+    }
+  }
+  return shuffle(selected);
+}
+
+function shuffle(items) {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
 }
 
 function makeResult(code, [enName, zhName, enTagline, zhTagline]) {
@@ -340,7 +388,7 @@ function compatibilityLine(code, lang) {
 
 function scoreLvti() {
   const axisScores = { RP: 0, SF: 0, DI: 0, EC: 0 };
-  for (const question of questions) {
+  for (const question of getTestQuestions()) {
     if (!(question.id in state.answers)) continue;
     let contribution = Number(state.answers[question.id]);
     if (question.reverse) contribution *= -1;
@@ -433,15 +481,16 @@ function startScreen() {
 }
 
 function testScreen() {
-  const index = clamp(state.currentQuestionIndex, 0, questions.length - 1);
+  const testQuestions = getTestQuestions();
+  const index = clamp(state.currentQuestionIndex, 0, testQuestions.length - 1);
   state.currentQuestionIndex = index;
-  const question = questions[index];
+  const question = testQuestions[index];
   const selected = state.answers[question.id];
-  const progress = Math.round((Object.keys(state.answers).length / questions.length) * 100);
+  const progress = Math.round((testQuestions.filter((item) => item.id in state.answers).length / testQuestions.length) * 100);
   return `
     <section>
       <div class="progress-meta">
-        <span>${t("question")} ${index + 1} ${state.language === "en" ? t("of") : ""} ${questions.length}</span>
+        <span>${t("question")} ${index + 1} ${state.language === "en" ? t("of") : ""} ${testQuestions.length}</span>
         <span>${progress}%</span>
       </div>
       <div class="progress-track" aria-hidden="true"><div class="progress-fill" style="width:${progress}%"></div></div>
@@ -458,7 +507,7 @@ function testScreen() {
       <div class="test-actions">
         <button type="button" class="ghost-button" data-action="back" ${index === 0 ? "disabled" : ""}>${t("back")}</button>
         <button type="button" class="primary-button" data-action="next" ${selected === undefined ? "disabled" : ""}>
-          ${index === questions.length - 1 ? t("seeType") : t("next")}
+          ${index === testQuestions.length - 1 ? t("seeType") : t("next")}
         </button>
       </div>
     </section>
@@ -520,7 +569,7 @@ function bindEvents() {
   });
   document.querySelectorAll("[data-answer]").forEach((button) => {
     button.addEventListener("click", () => {
-      const question = questions[state.currentQuestionIndex];
+      const question = getTestQuestions()[state.currentQuestionIndex];
       state.answers[question.id] = Number(button.dataset.answer);
       saveJson(STORAGE_KEYS.answers, state.answers);
       render();
@@ -536,7 +585,13 @@ function handleAction(action) {
     const hasProgress = Object.keys(state.answers).length > 0 || state.currentQuestionIndex > 0;
     if (state.completed) {
       state.answers = {};
+      state.selectedQuestionIds = buildQuestionSet();
       localStorage.removeItem(STORAGE_KEYS.answers);
+      saveJson(STORAGE_KEYS.selectedQuestionIds, state.selectedQuestionIds);
+    }
+    if (!hasProgress && !state.completed) {
+      state.selectedQuestionIds = buildQuestionSet();
+      saveJson(STORAGE_KEYS.selectedQuestionIds, state.selectedQuestionIds);
     }
     state.currentQuestionIndex = hasProgress && !state.completed ? state.currentQuestionIndex : 0;
     state.completed = false;
@@ -547,7 +602,8 @@ function handleAction(action) {
     state.currentQuestionIndex = Math.max(0, state.currentQuestionIndex - 1);
   }
   if (action === "next") {
-    if (state.currentQuestionIndex === questions.length - 1) {
+    const testQuestions = getTestQuestions();
+    if (state.currentQuestionIndex === testQuestions.length - 1) {
       state.completed = completedAll();
       if (state.completed) state.screen = "result";
     } else {
@@ -559,9 +615,11 @@ function handleAction(action) {
     state.currentQuestionIndex = 0;
     state.completed = false;
     state.started = true;
+    state.selectedQuestionIds = buildQuestionSet();
     state.screen = "test";
     state.shareNote = "";
     localStorage.removeItem(STORAGE_KEYS.answers);
+    saveJson(STORAGE_KEYS.selectedQuestionIds, state.selectedQuestionIds);
   }
   if (action === "share") {
     shareResult();
@@ -591,7 +649,7 @@ async function shareResult() {
 }
 
 function completedAll() {
-  return questions.every((question) => question.id in state.answers);
+  return getTestQuestions().every((question) => question.id in state.answers);
 }
 
 function t(key) {
@@ -634,13 +692,13 @@ function clamp(value, min, max) {
 
 function validateModel() {
   const errors = [];
-  if (questions.length !== 40) errors.push("Expected 40 questions.");
+  if (questions.length < 40) errors.push("Expected at least 40 questions in the question bank.");
   for (const axis of axes) {
     const axisQuestions = questions.filter((question) => question.axis === axis.id);
-    if (axisQuestions.length !== 10) errors.push(`${axis.id} should have 10 questions.`);
+    if (axisQuestions.length < 10) errors.push(`${axis.id} should have at least 10 questions.`);
     for (const pole of axis.poles) {
       const count = axisQuestions.filter((question) => question.positivePole === pole).length;
-      if (count !== 5) errors.push(`${axis.id}/${pole} should have 5 questions.`);
+      if (count < 5) errors.push(`${axis.id}/${pole} should have at least 5 questions.`);
     }
   }
   const ids = new Set(questions.map((question) => question.id));

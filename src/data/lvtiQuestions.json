@@ -38,5 +38,13 @@
   { "id": "q37", "axis": "EC", "positivePole": "E", "reverse": false, "text": { "en": "I can be deeply affected by small changes in someone's tone or attention.", "zh": "对方语气或关注度的一点变化，都可能很影响我的感受。" } },
   { "id": "q38", "axis": "EC", "positivePole": "C", "reverse": false, "text": { "en": "In love, I try not to let temporary emotions decide everything.", "zh": "在爱情里，我会尽量不让一时的情绪决定一切。" } },
   { "id": "q39", "axis": "EC", "positivePole": "E", "reverse": false, "text": { "en": "I feel closest to someone when we can share feelings openly and deeply.", "zh": "当我们能坦率而深入地分享感受时，我会觉得最亲近。" } },
-  { "id": "q40", "axis": "EC", "positivePole": "C", "reverse": false, "text": { "en": "A steady and peaceful bond is more attractive to me than emotional highs and lows.", "zh": "比起情绪的大起大落，稳定平和的连接更吸引我。" } }
+  { "id": "q40", "axis": "EC", "positivePole": "C", "reverse": false, "text": { "en": "A steady and peaceful bond is more attractive to me than emotional highs and lows.", "zh": "比起情绪的大起大落，稳定平和的连接更吸引我。" } },
+  { "id": "q41", "axis": "RP", "positivePole": "R", "reverse": false, "text": { "en": "A thoughtful treat on a date can feel romantic even if it is not expensive.", "zh": "约会时一个用心的小花费，即使不贵，也会让我觉得很浪漫。" } },
+  { "id": "q42", "axis": "RP", "positivePole": "P", "reverse": false, "text": { "en": "On dates, I care more about a spending style that fits real life than expensive romantic gestures.", "zh": "约会时，比起昂贵的浪漫表达，我更在意消费方式是否符合现实生活。" } },
+  { "id": "q43", "axis": "SF", "positivePole": "S", "reverse": false, "text": { "en": "A clear understanding about dating costs makes a relationship feel safer to me.", "zh": "对于约会花费有清楚共识，会让我在关系里更有安全感。" } },
+  { "id": "q44", "axis": "SF", "positivePole": "F", "reverse": false, "text": { "en": "I prefer dating costs to stay flexible instead of following one fixed rule every time.", "zh": "我更喜欢约会花费保持弹性，而不是每次都必须遵守固定规则。" } },
+  { "id": "q45", "axis": "DI", "positivePole": "D", "reverse": false, "text": { "en": "I would rather talk openly about splitting costs than silently guess what is expected.", "zh": "比起默默猜测该不该 AA，我更愿意直接聊清楚约会花费怎么分。" } },
+  { "id": "q46", "axis": "DI", "positivePole": "I", "reverse": false, "text": { "en": "When paying on dates, I prefer handling it naturally in the moment instead of discussing it directly.", "zh": "约会付款时，比起提前直接讨论，我更倾向于当下自然处理。" } },
+  { "id": "q47", "axis": "EC", "positivePole": "E", "reverse": false, "text": { "en": "Small spending gestures can affect my feelings when they make me feel remembered or valued.", "zh": "如果一些小花费让我感觉被记得、被重视，它们会很影响我的感受。" } },
+  { "id": "q48", "axis": "EC", "positivePole": "C", "reverse": false, "text": { "en": "I try not to judge someone's affection by how much money they spend on me.", "zh": "我会尽量不根据对方为我花了多少钱来判断对方有多喜欢我。" } }
 ]
