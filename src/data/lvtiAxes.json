@@ -1,0 +1,38 @@
+[
+  {
+    "id": "RP",
+    "poles": ["R", "P"],
+    "name": { "en": "Romantic vs Practical", "zh": "浪漫型 vs 现实型" },
+    "question": {
+      "en": "Do you value emotional romance or practical compatibility more?",
+      "zh": "你更重视情感浪漫，还是现实匹配？"
+    }
+  },
+  {
+    "id": "SF",
+    "poles": ["S", "F"],
+    "name": { "en": "Stable vs Free", "zh": "稳定型 vs 自由型" },
+    "question": {
+      "en": "Do you prefer security or freedom in love?",
+      "zh": "你在爱情里更偏好安全感，还是自由感？"
+    }
+  },
+  {
+    "id": "DI",
+    "poles": ["D", "I"],
+    "name": { "en": "Direct vs Indirect", "zh": "直接型 vs 含蓄型" },
+    "question": {
+      "en": "Do you express love clearly or subtly?",
+      "zh": "你表达爱意更直接，还是更含蓄？"
+    }
+  },
+  {
+    "id": "EC",
+    "poles": ["E", "C"],
+    "name": { "en": "Emotional vs Calm", "zh": "感性型 vs 冷静型" },
+    "question": {
+      "en": "Do you process love emotionally or calmly?",
+      "zh": "你处理爱情时更感性，还是更冷静？"
+    }
+  }
+]

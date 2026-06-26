@@ -1,0 +1,18 @@
+[
+  { "code": "RSDE", "name": { "en": "The Firehearted Loyalist", "zh": "炽热守护者" }, "tagline": { "en": "All in, heart first.", "zh": "全心投入，真诚热烈。" } },
+  { "code": "RSDC", "name": { "en": "The Gentle Anchor", "zh": "温柔锚点" }, "tagline": { "en": "Soft love, steady heart.", "zh": "温柔相爱，稳定靠近。" } },
+  { "code": "RSIE", "name": { "en": "The Secret Devotee", "zh": "隐秘深情者" }, "tagline": { "en": "Quiet signs, deep feelings.", "zh": "表达很轻，感情很深。" } },
+  { "code": "RSIC", "name": { "en": "The Quiet Keeper", "zh": "安静守护者" }, "tagline": { "en": "Steady care, hidden softness.", "zh": "稳定守护，温柔藏心。" } },
+  { "code": "RFDE", "name": { "en": "The Spark Chaser", "zh": "心动追光者" }, "tagline": { "en": "Big feelings, open skies.", "zh": "热烈心动，自由奔赴。" } },
+  { "code": "RFDC", "name": { "en": "The Moonlit Explorer", "zh": "月光探索者" }, "tagline": { "en": "Romantic, clear, never caged.", "zh": "浪漫清醒，不被困住。" } },
+  { "code": "RFIE", "name": { "en": "The Hidden Dreamer", "zh": "隐秘造梦者" }, "tagline": { "en": "A universe behind quiet eyes.", "zh": "安静眼神里，藏着一整个宇宙。" } },
+  { "code": "RFIC", "name": { "en": "The Soft Wanderer", "zh": "温柔游牧者" }, "tagline": { "en": "Tender heart, open road.", "zh": "心很柔软，路要自由。" } },
+  { "code": "PSDE", "name": { "en": "The Loyal Builder", "zh": "忠诚建造者" }, "tagline": { "en": "Love is built, not guessed.", "zh": "爱不是猜出来的，是一起建起来的。" } },
+  { "code": "PSDC", "name": { "en": "The Steady Realist", "zh": "稳定现实派" }, "tagline": { "en": "Clear mind, steady love.", "zh": "清醒相爱，稳定同行。" } },
+  { "code": "PSIE", "name": { "en": "The Careful Guardian", "zh": "谨慎守护者" }, "tagline": { "en": "Quiet effort, serious heart.", "zh": "默默用心，认真守护。" } },
+  { "code": "PSIC", "name": { "en": "The Silent Harbor", "zh": "沉静港湾" }, "tagline": { "en": "Low-key, loyal, dependable.", "zh": "低调、忠诚、可靠。" } },
+  { "code": "PFDE", "name": { "en": "The Bold Freeheart", "zh": "坦率自由者" }, "tagline": { "en": "Clear feelings, open doors.", "zh": "表达清楚，边界自由。" } },
+  { "code": "PFDC", "name": { "en": "The Clear-Eyed Nomad", "zh": "清醒游牧者" }, "tagline": { "en": "Honest love, light hands.", "zh": "清醒地爱，轻盈地靠近。" } },
+  { "code": "PFIE", "name": { "en": "The Lowkey Romantic", "zh": "低调心动者" }, "tagline": { "en": "Practical outside, soft inside.", "zh": "外表清醒，内心柔软。" } },
+  { "code": "PFIC", "name": { "en": "The Independent Minimalist", "zh": "独立极简者" }, "tagline": { "en": "Simple love, wide space.", "zh": "简单相爱，保留空间。" } }
+]

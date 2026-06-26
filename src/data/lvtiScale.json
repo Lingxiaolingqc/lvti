@@ -1,0 +1,7 @@
+[
+  { "value": -2, "label": { "en": "Strongly disagree", "zh": "非常不同意" } },
+  { "value": -1, "label": { "en": "Disagree", "zh": "不同意" } },
+  { "value": 0, "label": { "en": "Neutral", "zh": "中立" } },
+  { "value": 1, "label": { "en": "Agree", "zh": "同意" } },
+  { "value": 2, "label": { "en": "Strongly agree", "zh": "非常同意" } }
+]
