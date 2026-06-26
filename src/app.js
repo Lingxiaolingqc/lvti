@@ -27,6 +27,7 @@ const uiText = {
     ],
     start: "Start Test",
     continue: "Continue Test",
+    reset: "Start Over",
     disclaimer: "For self-reflection and fun, not a psychological diagnosis.",
     question: "Question",
     of: "of",
@@ -67,6 +68,7 @@ const uiText = {
     ],
     start: "开始测试",
     continue: "继续测试",
+    reset: "重新开始",
     disclaimer: "仅供自我了解和娱乐，不是心理诊断。",
     question: "题目",
     of: "/",
@@ -225,16 +227,30 @@ function getQuestionById(id) {
 
 function getTestQuestions() {
   if (!Array.isArray(state.selectedQuestionIds) || state.selectedQuestionIds.length !== 40) {
-    state.selectedQuestionIds = buildQuestionSet();
+    state.selectedQuestionIds = recoverQuestionSet();
     saveJson(STORAGE_KEYS.selectedQuestionIds, state.selectedQuestionIds);
   }
   const selected = state.selectedQuestionIds.map(getQuestionById).filter(Boolean);
+  const answeredIds = Object.keys(state.answers).filter((id) => getQuestionById(id));
+  if (selected.length === 40 && answeredIds.length >= 40 && !selected.every((question) => question.id in state.answers)) {
+    state.selectedQuestionIds = recoverQuestionSet();
+    saveJson(STORAGE_KEYS.selectedQuestionIds, state.selectedQuestionIds);
+    return state.selectedQuestionIds.map(getQuestionById).filter(Boolean);
+  }
   if (selected.length !== 40) {
-    state.selectedQuestionIds = buildQuestionSet();
+    state.selectedQuestionIds = recoverQuestionSet();
     saveJson(STORAGE_KEYS.selectedQuestionIds, state.selectedQuestionIds);
     return state.selectedQuestionIds.map(getQuestionById).filter(Boolean);
   }
   return selected;
+}
+
+function recoverQuestionSet() {
+  const answeredIds = Object.keys(state.answers).filter((id) => getQuestionById(id));
+  if (answeredIds.length > 0 || state.currentQuestionIndex > 0) {
+    return questions.slice(0, 40).map((question) => question.id);
+  }
+  return buildQuestionSet();
 }
 
 function buildQuestionSet() {
@@ -405,8 +421,21 @@ function scoreLvti() {
     typeCode,
     axisScores,
     axisPoles,
+    axisPercentages: calculateAxisPercentages(axisScores),
     confidence: Object.fromEntries(Object.entries(axisScores).map(([axis, score]) => [axis, confidenceLabel(score)])),
   };
+}
+
+function calculateAxisPercentages(axisScores) {
+  return Object.fromEntries(axes.map((axis) => {
+    const questionCount = getTestQuestions().filter((question) => question.axis === axis.id).length;
+    const maxScore = Math.max(1, questionCount * 2);
+    const positive = Math.round(((axisScores[axis.id] + maxScore) / (maxScore * 2)) * 100);
+    return [axis.id, {
+      [AXIS_POSITIVE_POLE[axis.id]]: clamp(positive, 0, 100),
+      [AXIS_NEGATIVE_POLE[axis.id]]: 100 - clamp(positive, 0, 100),
+    }];
+  }));
 }
 
 function confidenceLabel(score) {
@@ -458,6 +487,7 @@ function startScreen() {
         <p>${t("intro")}</p>
         <div class="hero-actions">
           <button type="button" class="primary-button" data-action="start">${actionText}</button>
+          ${hasProgress ? `<button type="button" class="ghost-button" data-action="reset">${t("reset")}</button>` : ""}
         </div>
         <span class="disclaimer">${t("disclaimer")}</span>
       </div>
@@ -528,9 +558,20 @@ function resultScreen() {
         <div class="axis-grid">
           ${axes.map((axis) => {
             const pole = score.axisPoles[axis.id];
+            const positivePole = AXIS_POSITIVE_POLE[axis.id];
+            const negativePole = AXIS_NEGATIVE_POLE[axis.id];
+            const positivePercent = score.axisPercentages[axis.id][positivePole];
+            const negativePercent = score.axisPercentages[axis.id][negativePole];
             return `<div class="axis-item" style="background:${AXIS_COLORS[axis.id]}">
               <strong>${axis.labels[pole][state.language]}</strong>
               <span>${t(score.confidence[axis.id])}</span>
+              <div class="axis-percent-row">
+                <span>${axis.labels[positivePole][state.language]} ${positivePercent}%</span>
+                <span>${axis.labels[negativePole][state.language]} ${negativePercent}%</span>
+              </div>
+              <div class="axis-percent-track" aria-hidden="true">
+                <div class="axis-percent-fill" style="width:${positivePercent}%"></div>
+              </div>
             </div>`;
           }).join("")}
         </div>
@@ -606,11 +647,12 @@ function handleAction(action) {
     if (state.currentQuestionIndex === testQuestions.length - 1) {
       state.completed = completedAll();
       if (state.completed) state.screen = "result";
+      if (!state.completed) state.currentQuestionIndex = firstUnansweredIndex(testQuestions);
     } else {
       state.currentQuestionIndex += 1;
     }
   }
-  if (action === "retake") {
+  if (action === "retake" || action === "reset") {
     state.answers = {};
     state.currentQuestionIndex = 0;
     state.completed = false;
@@ -650,6 +692,11 @@ async function shareResult() {
 
 function completedAll() {
   return getTestQuestions().every((question) => question.id in state.answers);
+}
+
+function firstUnansweredIndex(testQuestions = getTestQuestions()) {
+  const index = testQuestions.findIndex((question) => !(question.id in state.answers));
+  return index === -1 ? testQuestions.length - 1 : index;
 }
 
 function t(key) {
