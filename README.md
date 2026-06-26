@@ -100,4 +100,4 @@ LVTI v1 is intentionally simple:
 - No public profile pages
 - No psychological diagnosis claims
 
-It is for self-reflection and entertainment.
+It is for entertainment.
