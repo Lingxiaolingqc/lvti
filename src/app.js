@@ -40,9 +40,9 @@ const uiText = {
     retake: "Retake Test",
     strengths: "Love strengths",
     blindSpots: "Possible blind spots",
-    communicationStyle: "Communication style",
-    conflictStyle: "Conflict style",
-    idealDynamic: "Ideal relationship dynamic",
+    communicationStyle: "Communication notes",
+    conflictStyle: "Conflict notes",
+    idealDynamic: "Relationship notes",
     compatibilityNotes: "Compatibility notes",
     axisBreakdown: "Your love-view map",
     slight: "slight preference",
@@ -81,10 +81,10 @@ const uiText = {
     retake: "重新测试",
     strengths: "恋爱优势",
     blindSpots: "可能的盲点",
-    communicationStyle: "沟通方式",
-    conflictStyle: "冲突方式",
-    idealDynamic: "理想关系状态",
-    compatibilityNotes: "适配提示",
+    communicationStyle: "沟通提醒",
+    conflictStyle: "冲突提醒",
+    idealDynamic: "关系提醒",
+    compatibilityNotes: "适配提醒",
     axisBreakdown: "你的恋爱观地图",
     slight: "轻微倾向",
     clear: "明显倾向",
@@ -281,7 +281,7 @@ function makeResult(code, [enName, zhName, enTagline, zhTagline]) {
     tagline: { en: enTagline, zh: zhTagline },
     summary: {
       en: `You bring a ${traits.en.join(", ")} style to love. Your type shows how you seek connection, handle closeness, and keep your heart feeling true to itself.`,
-      zh: `你的恋爱方式带着${traits.zh.join("、")}的特点。这个类型描述你如何靠近他人、处理亲密关系，并保持内心真实。`,
+      zh: `你的恋爱方式带着${traits.zh.join("、")}的特点，也影响着你靠近他人、经营亲密关系，以及表达真实自我的方式。`,
     },
     strengths: {
       en: strengthLines(code, "en"),
@@ -332,74 +332,122 @@ function describeCode(code) {
 
 function strengthLines(code, lang) {
   const lines = {
-    R: { en: "You make love feel meaningful and memorable.", zh: "你能让爱情显得有意义、有记忆点。" },
-    P: { en: "You keep love connected to real life and real effort.", zh: "你能让爱情落在现实生活和实际努力里。" },
-    S: { en: "You value loyalty, trust, and emotional dependability.", zh: "你重视忠诚、信任和情感上的可靠。" },
-    F: { en: "You respect personal space and help love stay alive.", zh: "你尊重个人空间，也让爱情保持生命力。" },
-    D: { en: "You reduce confusion by making important feelings clearer.", zh: "你愿意把重要感受说清楚，减少误会。" },
-    I: { en: "You notice subtle details and show care in quiet ways.", zh: "你能注意细节，并用安静的方式表达关心。" },
-    E: { en: "You bring warmth, depth, and emotional honesty.", zh: "你会带来温度、深度和情感真实。" },
-    C: { en: "You bring patience, steadiness, and emotional balance.", zh: "你会带来耐心、稳定和情绪平衡。" },
+    R: {
+      en: "You bring romance and meaning into a relationship, helping love feel like more than routine and creating moments worth remembering.",
+      zh: "你能为关系注入浪漫感和意义感，让爱不只是日常相处，也有值得记住的时刻。",
+    },
+    P: {
+      en: "You keep love connected to real life, offering practical support and long-term effort that make the relationship easier to trust.",
+      zh: "你能把爱落到真实生活里，用实际支持和长期配合让关系更稳、更可信。",
+    },
+    S: {
+      en: "You value steadiness, commitment, and dependable presence, bringing a strong sense of safety into closeness.",
+      zh: "你重视稳定、承诺和可依赖的陪伴，能给亲密关系带来踏实的安全感。",
+    },
+    F: {
+      en: "You respect each person's space and rhythm, helping love stay close without losing the freedom to breathe.",
+      zh: "你尊重彼此的空间和节奏，让关系在靠近之外也保有自由呼吸的余地。",
+    },
+    D: {
+      en: "You are willing to name important feelings clearly, giving the relationship less guessing and more honest response.",
+      zh: "你愿意把重要感受说清楚，让关系少一点猜测，多一点坦诚而及时的回应。",
+    },
+    I: {
+      en: "You show care through details, actions, and quiet understanding, making affection feel natural, subtle, and deeply felt.",
+      zh: "你擅长用细节、行动和默契表达在意，让关心显得自然、含蓄，也更耐人寻味。",
+    },
+    E: {
+      en: "You enter love with emotional depth and sincerity, bringing warmth, aliveness, and a strong sense of being truly present.",
+      zh: "你带着真诚的情绪深度进入关系，能让爱变得有温度、有生命力，也更真实。",
+    },
+    C: {
+      en: "You can keep proportion through emotional ups and downs, giving the relationship more balance, patience, and calm.",
+      zh: "你能在情绪起伏中保持冷静和分寸，让关系多一份平衡、耐心与安定。",
+    },
   };
-  return [lines[code[0]][lang], lines[code[1]][lang], `${lines[code[2]][lang]} ${lines[code[3]][lang]}`];
+  return [lines[code[0]][lang], lines[code[1]][lang], lines[code[2]][lang], lines[code[3]][lang]];
 }
 
 function blindSpotLines(code, lang) {
   const lines = {
-    R: { en: "You may expect love to feel special even during ordinary days.", zh: "你可能会期待爱情在普通日子里也一直有特别感。" },
-    P: { en: "You may underplay romance when the other person needs atmosphere.", zh: "当对方需要浪漫氛围时，你可能会低估它的重要性。" },
-    S: { en: "Unclear direction can make you more uneasy than you show.", zh: "关系方向不清楚时，你可能比表面更不安。" },
-    F: { en: "You may step back when commitment starts to feel like pressure.", zh: "当承诺开始像压力时，你可能会后退。" },
-    D: { en: "Your honesty can feel intense if timing or tone is too sharp.", zh: "如果时机或语气太锋利，你的坦诚可能显得有压迫感。" },
-    I: { en: "Others may miss your feelings if you leave too much unsaid.", zh: "如果你说得太少，别人可能会错过你的真实心意。" },
-    E: { en: "Strong feelings may make small changes feel bigger than they are.", zh: "强烈情绪可能让细小变化显得比实际更大。" },
-    C: { en: "You may seem distant when you are only trying to stay balanced.", zh: "你可能只是想保持平衡，却看起来有些疏离。" },
+    R: {
+      en: "You may expect love to keep feeling special in everyday life. Quiet phases may make you feel disappointed more easily.",
+      zh: "你可能会期待爱情在日常里也持续保持特别感。平淡阶段可能会让你更容易感到失落。",
+    },
+    P: {
+      en: "You may underestimate how much romance, emotional expression, or small rituals mean to the other person.",
+      zh: "你可能会低估浪漫氛围、情绪表达或小仪式对对方的意义。",
+    },
+    S: {
+      en: "Unclear pacing, vague commitment, or inconsistent response may unsettle you more than you show.",
+      zh: "关系节奏模糊、承诺不清或回应不稳定时，你可能会比表面看起来更不安。",
+    },
+    F: {
+      en: "When a relationship begins to carry responsibility, expectation, or fixed structure, you may instinctively feel pressured.",
+      zh: "关系开始带来责任、期待或固定形式时，你可能会本能地感到压力。",
+    },
+    D: {
+      en: "Your directness may feel overwhelming if it comes too quickly or strongly.",
+      zh: "你的直接如果太快太满，可能会让对方感到被逼近。",
+    },
+    I: {
+      en: "If you express too little, the other person may struggle to read your real feelings.",
+      zh: "你如果表达得太少，对方可能很难确认你的真实心意。",
+    },
+    E: {
+      en: "Small changes in tone, distance, or response may become much larger feelings inside you.",
+      zh: "小小的语气、距离或回应变化，可能会在你心里被放大成更强烈的感受。",
+    },
+    C: {
+      en: "Your calm may be mistaken for coldness, distance, or lack of investment.",
+      zh: "你的冷静可能会被误解成冷淡、疏离或不够投入。",
+    },
   };
-  return [lines[code[0]][lang], lines[code[1]][lang], `${lines[code[2]][lang]} ${lines[code[3]][lang]}`];
+  return [lines[code[0]][lang], lines[code[1]][lang], lines[code[2]][lang], lines[code[3]][lang]];
 }
 
 function communicationLine(code, lang) {
   if (lang === "zh") {
     return code.includes("D")
-      ? "你偏好清楚、有回应的沟通。温柔一点的表达方式能让你的直接更容易被接住。"
-      : "你常通过行动、细节和时机表达在意。适当增加清楚的话语，会让对方更有安全感。";
+      ? "你更习惯把重要感受说清楚，也希望对方能给出明确回应。这样的沟通方式能减少误会，让关系更快进入真实的交流；只是当话题敏感时，放慢一点语气和节奏，会让你的坦诚更容易被接住。"
+      : "你常通过行动、细节和时机表达在意，而不是马上把所有感受说出口。这样的沟通方式很细腻，也能让关系保留自然的余地；只是当对方需要确认时，适当说出你的心意，会让你的温柔更容易被理解。";
   }
   return code.includes("D")
-    ? "You prefer clear, responsive communication. Softer timing helps your directness feel easier to receive."
-    : "You often communicate through actions, details, and timing. A little more clarity can help others feel secure.";
+    ? "You tend to name important feelings clearly, and you usually appreciate a direct response in return. This helps reduce confusion and brings the relationship into honest conversation more quickly; when the topic is sensitive, a softer pace can make your clarity easier to receive."
+    : "You often express care through actions, details, and timing rather than saying everything directly. This gives your communication subtlety and naturalness; when the other person needs reassurance, putting some feelings into words can make your tenderness easier to understand.";
 }
 
 function conflictLine(code, lang) {
   if (lang === "zh") {
     return code.includes("E")
-      ? "冲突中你可能很快感受到情绪波动。先说出真正的需求，通常比只表达情绪更有效。"
-      : "冲突中你倾向先冷静和思考。记得让对方知道你还在关系里，而不是已经离开。";
+      ? "冲突中，你通常会很快感受到情绪的变化，也容易捕捉到关系里细微的不对劲。你的情绪往往不只是情绪本身，它也可能在提醒你：自己需要被理解、被重视，或需要更清楚的回应。把这份需求说出来，会比只让情绪往前冲更容易带来真正的沟通。"
+      : "冲突中，你倾向先冷静下来、整理思路，再决定如何回应。这样的方式能避免关系被一时情绪推着走；只是对方可能需要知道，你的安静是在消化问题，而不是考虑退出关系。";
   }
   return code.includes("E")
-    ? "In conflict, your feelings may rise quickly. Naming the need underneath the emotion usually works better than emotion alone."
-    : "In conflict, you tend to cool down and think. Let the other person know you are still present, not gone.";
+    ? "In conflict, you may feel emotional shifts quickly and notice subtle changes in the relationship. Your feelings are often not only feelings; they may also be pointing to a need to feel understood, valued, or more clearly responded to. Naming that need can create real communication more effectively than letting emotion move forward on its own."
+    : "In conflict, you tend to cool down, organize your thoughts, and respond after you have more clarity. This can keep the relationship from being driven by temporary emotion; the other person may still need to know that your quietness means you are processing, not leaving.";
 }
 
 function idealLine(code, lang) {
   if (lang === "zh") {
     return code.includes("F")
-      ? "你适合和有安全感、尊重空间、也愿意真实靠近的人相处。"
-      : "你适合和可靠、真诚、愿意一起建立信任的人相处。";
+      ? "你更适合一种有空间感的亲密关系：两个人可以真实靠近，也能保留各自的节奏、兴趣和生活边界。你理想中的爱不是互相困住，而是在自由里仍然愿意选择彼此；你也需要留意，自己想要的空间是否有时变成了回避问题的方式。"
+      : "你更适合一种稳定、清楚、可依赖的关系状态。你会在持续的回应、可靠的行动和逐渐建立的信任里感到安心；对你来说，爱不只是心动，也是一种愿意一起走下去的确定感。只是当你太想确认关系方向时，也要留意自己是否把安全感变成了控制感。";
   }
   return code.includes("F")
-    ? "You thrive with someone secure, respectful of space, and still willing to build real closeness."
-    : "You thrive with someone reliable, sincere, and willing to build trust with you over time.";
+    ? "You thrive in a relationship with room to breathe: both people can be genuinely close while keeping their own rhythm, interests, and boundaries. Your ideal love does not trap either person; it allows both of you to keep choosing each other freely. It is also worth noticing whether your need for space sometimes becomes a way to avoid problem."
+    : "You thrive in a relationship that feels steady, clear, and dependable. Consistent response, reliable action, and gradually built trust help you feel safe; for you, love is not only attraction, but also the sense that both people are willing to keep walking together. When you strongly need certainty, it is worth noticing whether your search for safety is turning into control.";
 }
 
 function compatibilityLine(code, lang) {
   if (lang === "zh") {
     return code.includes("R")
-      ? "你通常适合能欣赏情感意义的人。面对更现实或更慢热的人时，耐心会让关系更顺。"
-      : "你通常适合重视现实配合和边界感的人。面对更浪漫或情绪强烈的人时，记得给出一些温度。";
+      ? "你通常更容易被能理解情感意义、珍惜仪式感、愿意回应浪漫的人打动。和更现实或慢热的人相处时，你们可能需要给彼此一点理解时间：你看重的是爱的温度，对方看重的可能是爱的稳定落地。"
+      : "你通常更适合重视现实配合、边界感和长期稳定的人。和更浪漫或情绪强烈的人相处时，你们可能需要理解彼此表达爱的方式不同：你在意关系能不能走得稳，对方可能更在意关系有没有被认真感受。";
   }
   return code.includes("R")
-    ? "You often match well with people who appreciate emotional meaning. With more practical or slow-warming partners, patience helps."
-    : "You often match well with people who value real-life fit and boundaries. With more romantic or intense partners, warmth matters.";
+    ? "You are often drawn to people who understand emotional meaning, value small rituals, and respond to romance. With someone more practical or slow-warming, you may need a little translation space: you may look for the warmth of love, while they may show love through steadiness and real-life effort."
+    : "You often match well with people who value real-life fit, boundaries, and long-term steadiness. With someone more romantic or emotionally intense, it may help to remember that you express love differently: you may focus on whether the relationship can work, while they may focus on whether the relationship feels deeply felt.";
 }
 
 function scoreLvti() {
@@ -578,10 +626,10 @@ function resultScreen() {
       </div>
       ${section(t("strengths"), list(result.strengths[state.language]))}
       ${section(t("blindSpots"), list(result.blindSpots[state.language]))}
+      ${section(t("compatibilityNotes"), `<p>${result.compatibilityNotes[state.language]}</p>`)}
+      ${section(t("idealDynamic"), `<p>${result.idealDynamic[state.language]}</p>`)}
       ${section(t("communicationStyle"), `<p>${result.communicationStyle[state.language]}</p>`)}
       ${section(t("conflictStyle"), `<p>${result.conflictStyle[state.language]}</p>`)}
-      ${section(t("idealDynamic"), `<p>${result.idealDynamic[state.language]}</p>`)}
-      ${section(t("compatibilityNotes"), `<p>${result.compatibilityNotes[state.language]}</p>`)}
       <div class="result-actions">
         <button type="button" class="share-button primary-button" data-action="share">${t("share")}</button>
         <button type="button" class="ghost-button" data-action="retake">${t("retake")}</button>
