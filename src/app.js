@@ -184,21 +184,21 @@ const questions = [
 
 const resultBase = {
   RSDE: ["The Firehearted Loyalist", "炽热守护者", "All in, heart first.", "全心投入，真诚热烈。"],
-  RSDC: ["The Gentle Anchor", "温柔锚点", "Soft love, steady heart.", "温柔相爱，稳定靠近。"],
+  RSDC: ["The Gentle Anchor", "温柔锚点", "Soft love, steady heart.", "温柔相爱，稳定真心。"],
   RSIE: ["The Secret Devotee", "隐秘深情者", "Quiet signs, deep feelings.", "表达很轻，感情很深。"],
   RSIC: ["The Quiet Keeper", "安静守护者", "Steady care, hidden softness.", "稳定守护，温柔藏心。"],
   RFDE: ["The Spark Chaser", "心动追光者", "Big feelings, open skies.", "热烈心动，自由奔赴。"],
-  RFDC: ["The Moonlit Explorer", "月光探索者", "Romantic, clear, never caged.", "浪漫清醒，不被困住。"],
-  RFIE: ["The Hidden Dreamer", "隐秘造梦者", "A universe behind quiet eyes.", "安静眼神里，藏着一整个宇宙。"],
-  RFIC: ["The Soft Wanderer", "温柔游牧者", "Tender heart, open road.", "心很柔软，路要自由。"],
+  RFDC: ["The Moonlit Explorer", "月光探索者", "Romantic, clear, never caged.", "浪漫清醒，爱不为笼。"],
+  RFIE: ["The Hidden Dreamer", "隐秘造梦者", "A universe behind quiet eyes.", "眼神里藏着一整个宇宙。"],
+  RFIC: ["The Soft Wanderer", "温柔游牧者", "Tender heart, open road.", "柔软心，自由爱。"],
   PSDE: ["The Loyal Builder", "忠诚建造者", "Love is built, not guessed.", "爱不是猜出来的，是一起建起来的。"],
-  PSDC: ["The Steady Realist", "稳定现实派", "Clear mind, steady love.", "清醒相爱，稳定同行。"],
+  PSDC: ["The Steady Realist", "稳定现实派", "Clear mind, steady love.", "爱于实际，稳定同行。"],
   PSIE: ["The Careful Guardian", "谨慎守护者", "Quiet effort, serious heart.", "默默用心，认真守护。"],
-  PSIC: ["The Silent Harbor", "沉静港湾", "Low-key, loyal, dependable.", "低调、忠诚、可靠。"],
+  PSIC: ["The Silent Harbor", "沉静港湾", "Low-key, loyal, dependable.", "低调~忠诚~可靠~"],
   PFDE: ["The Bold Freeheart", "坦率自由者", "Clear feelings, open doors.", "表达清楚，边界自由。"],
   PFDC: ["The Clear-Eyed Nomad", "清醒游牧者", "Honest love, light hands.", "清醒地爱，轻盈地靠近。"],
-  PFIE: ["The Lowkey Romantic", "低调心动者", "Practical outside, soft inside.", "外表清醒，内心柔软。"],
-  PFIC: ["The Independent Minimalist", "独立极简者", "Simple love, wide space.", "简单相爱，保留空间。"],
+  PFIE: ["The Lowkey Romantic", "低调心动者", "Practical outside, soft inside.", "外冷内热，温柔于心。"],
+  PFIC: ["The Independent Minimalist", "独立极简者", "Simple love, wide space.", "简单相爱，互留空间。"],
 };
 
 const results = Object.fromEntries(Object.entries(resultBase).map(([code, base]) => [code, makeResult(code, base)]));
